@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'rqrcode_png_bin'
+
+RqrcodePngBin::App.new(ARGV).run
