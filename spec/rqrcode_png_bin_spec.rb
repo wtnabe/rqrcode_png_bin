@@ -7,20 +7,20 @@ describe RqrcodePngBin do
   end
 
   describe '#parser' do
-    context 'size' do
+    context 'canvas' do
       context 'nil' do
         it {
-          expect(app.size).to be == 4
+          expect(app.canvas).to be_nil
         }
       end
-      context '5' do
+      context '200x200' do
         it {
-          expect(app(%w(-s 5)).size).to be == 5
+          expect(app(%w(-c 200x200)).canvas).to be == [200, 200]
         }
       end
-      context 'a' do
+      context 'abc' do
         it {
-          expect {app(%w(-s a))}.to raise_error(ArgumentError)
+          expect {app(%w(-c abc))}.to raise_error(ArgumentError)
         }
       end
     end
@@ -41,20 +41,20 @@ describe RqrcodePngBin do
         }
       end
     end
-    context 'canvas' do
+    context 'size' do
       context 'nil' do
         it {
-          expect(app.canvas).to be_nil
+          expect(app.size).to be == 4
         }
       end
-      context '200x200' do
+      context '5' do
         it {
-          expect(app(%w(-c 200x200)).canvas).to be == [200, 200]
+          expect(app(%w(-s 5)).size).to be == 5
         }
       end
-      context 'abc' do
+      context 'a' do
         it {
-          expect {app(%w(-c abc))}.to raise_error(ArgumentError)
+          expect {app(%w(-s a))}.to raise_error(ArgumentError)
         }
       end
     end

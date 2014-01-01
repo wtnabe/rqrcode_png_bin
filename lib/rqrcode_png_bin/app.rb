@@ -5,13 +5,14 @@ module RqrcodePngBin
   class App
     def initialize(argv = [])
       @argv   = argv
-      @size   = 4
-      @level  = :m
+
       @canvas = nil
+      @level  = :m
+      @size   = 4
 
       parser.parse!(@argv)
     end
-    attr_reader :size, :level, :canvas
+    attr_reader :canvas, :level, :size
 
     def run
       if str
@@ -48,13 +49,14 @@ module RqrcodePngBin
       OptionParser.new do |opt|
         opt.version = VERSION
         opt.banner  = "Usage: rqrcode_png [option] string"
-        opt.on('-s', '--size SIZE (default 4)') {|v|
-          re = %r{\A[0-9]+\z}
+
+        opt.on('-c', '--canvas CANVAS (ex 200x200)') {|v|
+          re = %r{\A([0-9]+)x([0-9]+)\z}
 
           if v =~ re
-            @size = v.to_i
+            @canvas = [$1.to_i, $2.to_i]
           else
-            raise ArgumentError, "option size should match #{re}"
+            raise ArgumentError, "option canvas should match #{re}"
           end
         }
         opt.on('-l', '--level LEVEL (default m)') {|v|
@@ -66,13 +68,13 @@ module RqrcodePngBin
             raise ArgumentError, "option level should be included #{options}"
           end
         }
-        opt.on('-c', '--canvas CANVAS (ex 200x200)') {|v|
-          re = %r{\A([0-9]+)x([0-9]+)\z}
+        opt.on('-s', '--size SIZE (default 4)') {|v|
+          re = %r{\A[0-9]+\z}
 
           if v =~ re
-            @canvas = [$1.to_i, $2.to_i]
+            @size = v.to_i
           else
-            raise ArgumentError, "option canvas should match #{re}"
+            raise ArgumentError, "option size should match #{re}"
           end
         }
       end
