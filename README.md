@@ -8,7 +8,7 @@ command line interface for rqrcode_png
 
 ## Usage
 
- rqrcode_png STRING > qrcode.png
+    $ rqrcode_png STRING > qrcode.png
 
 ## Contributing
 
