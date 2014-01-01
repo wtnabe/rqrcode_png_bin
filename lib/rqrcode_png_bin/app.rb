@@ -20,7 +20,7 @@ module RqrcodePngBin
 
         STDOUT.puts png
       else
-        STDERR.puts "rqrcode_png #{VERSION}", nil, parser.help
+        STDERR.puts "rqrcode_png #{VERSION}", '', parser.help
       end
     end
 
