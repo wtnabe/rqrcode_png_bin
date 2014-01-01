@@ -7,12 +7,13 @@ module RqrcodePngBin
       @argv   = argv
 
       @canvas = nil
+      @file   = nil
       @level  = :m
       @size   = 4
 
       parser.parse!(@argv)
     end
-    attr_reader :canvas, :level, :size
+    attr_reader :canvas, :file, :level, :size
 
     def run
       if str
@@ -57,6 +58,13 @@ module RqrcodePngBin
             @canvas = [$1.to_i, $2.to_i]
           else
             raise ArgumentError, "option canvas should match #{re}"
+          end
+        }
+        opt.on('-f', '--from-file FILE') {|v|
+          if File.exist?(v)
+            @file = v
+          else
+            raise ArgumentError, "file you specified '#{v}' does not exist"
           end
         }
         opt.on('-l', '--level LEVEL (default m)') {|v|

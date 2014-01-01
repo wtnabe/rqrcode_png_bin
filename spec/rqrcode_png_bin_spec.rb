@@ -24,6 +24,23 @@ describe RqrcodePngBin do
         }
       end
     end
+    context 'file' do
+      context 'nil' do
+        it {
+          expect(app.file).to be_nil
+        }
+      end
+      context 'file exist' do
+        it {
+          expect(app(['-f', __FILE__]).file).to be == __FILE__
+        }
+      end
+      context 'file not exist' do
+        it {
+          expect {app(%w(-f foo)).file}.to raise_error(ArgumentError)
+        }
+      end
+    end
     context 'level' do
       context 'nil' do
         it {
