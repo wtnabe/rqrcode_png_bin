@@ -16,14 +16,24 @@ module RqrcodePngBin
     attr_reader :canvas, :file, :level, :size
 
     def run
-      if str
-        png = RQRCode::QRCode.new(str, opts).to_img
-        png = png.resize(*canvas) if canvas
-
-        STDOUT.puts png
+      if file
+        FileReader.new(file).each {|str, dest|
+          open(dest, 'wb') {|f|
+            f.puts generate_png(str)
+          }
+        }
+      elsif str
+        STDOUT.puts generate_png(str)
       else
         STDERR.puts "rqrcode_png #{VERSION}", '', parser.help
       end
+    end
+
+    def generate_png(str)
+      png = RQRCode::QRCode.new(str, opts).to_img
+      png = png.resize(*canvas) if canvas
+
+      png
     end
 
     #
