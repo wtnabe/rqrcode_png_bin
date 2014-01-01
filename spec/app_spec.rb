@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
 
-describe RqrcodePngBin do
+describe RqrcodePngBin::App do
   def app(argv = [])
     RqrcodePngBin::App.new(argv)
   end
