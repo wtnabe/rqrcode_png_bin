@@ -31,7 +31,7 @@ describe RqrcodePngBin::FileReader do
         it { expect(str).to be == 'http://github.com' }
       end
       context '@dest' do
-        it { expect(dest).to be == 'http%3A%2F%2Fgithub.com.png' }
+        it { expect(dest).to be == 'http:%2F%2Fgithub.com.png' }
       end
     end
     context 'string with filename' do

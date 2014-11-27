@@ -1,5 +1,4 @@
 require "optparse"
-require "nkf"
 
 module RqrcodePngBin
   class App
@@ -10,20 +9,21 @@ module RqrcodePngBin
       @file   = nil
       @level  = :m
       @size   = 4
+      @stdin  = nil
 
       parser.parse!(@argv)
     end
-    attr_reader :canvas, :file, :level, :size
+    attr_reader :canvas, :file, :level, :size, :stdin
 
     def run
       if file
         FileReader.new(file).each {|str, dest|
           open(dest, 'wb') {|f|
-            f.puts generate_png(str)
+            f.puts generate_png(encoded_str(str))
           }
         }
       elsif str
-        STDOUT.puts generate_png(str)
+        STDOUT.puts generate_png(encoded_str(str))
       else
         STDERR.puts "rqrcode_png #{VERSION}", '', parser.help
       end
@@ -36,11 +36,20 @@ module RqrcodePngBin
       png
     end
 
+    def encoded_str(str)
+      str.encode('SJIS').force_encoding('ASCII-8BIT')
+    end
+
     #
     # [return] String
     #
     def str
-      str = @argv.first
+      if @argv.first
+        @argv.first
+      else
+        @stdin ||= $stdin.gets
+        stdin if stdin.size > 0
+      end
     end
 
     #
