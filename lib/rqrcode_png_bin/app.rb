@@ -19,18 +19,18 @@ module RqrcodePngBin
       if file
         FileReader.new(file).each {|str, dest|
           open(dest, 'wb') {|f|
-            f.puts generate_png(encoded_str(str))
+            f.puts generate_png(str)
           }
         }
       elsif str
-        STDOUT.puts generate_png(encoded_str(str))
+        STDOUT.puts generate_png(str)
       else
         STDERR.puts "rqrcode_png #{VERSION}", '', parser.help
       end
     end
 
     def generate_png(str)
-      png = RQRCode::QRCode.new(str, opts).to_img
+      png = RQRCode::QRCode.new(encoded_str(str), opts).to_img
       png = png.resize(*canvas) if canvas
 
       png
