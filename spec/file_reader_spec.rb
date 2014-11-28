@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe RqrcodePngBin::FileReader do
@@ -12,6 +13,17 @@ describe RqrcodePngBin::FileReader do
       reader.instance_variable_get('@dest')
     }
 
+    context 'empty' do
+      before {
+        reader.split!('')
+      }
+      context '@str' do
+        it { expect(str).to be_nil }
+      end
+      context '@dest' do
+        it { expect(dest).to be_nil }
+      end
+    end
     context 'only string without escape' do
       before {
         reader.split!('abc')
@@ -43,6 +55,17 @@ describe RqrcodePngBin::FileReader do
       end
       context '@dest' do
         it { expect(dest).to be == 'filename' }
+      end
+    end
+    context 'japanese string' do
+      before {
+        reader.split!("日本/語")
+      }
+      context '@str' do
+        it { expect(str).to be == '日本/語' }
+      end
+      context '@dest' do
+        it { expect(dest).to be == '日本%2F語.png' }
       end
     end
   end
