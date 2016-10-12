@@ -30,10 +30,10 @@ module RqrcodePngBin
     end
 
     def generate_png(str)
-      png = RQRCode::QRCode.new(encoded_str(str), opts).to_img
-      png = png.resize(*canvas) if canvas
+      options = {}
+      options[:size] = canvas.first if canvas
 
-      png
+      RQRCode::QRCode.new(encoded_str(str), opts).as_png(options)
     end
 
     def encoded_str(str)

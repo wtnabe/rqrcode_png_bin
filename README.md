@@ -1,6 +1,6 @@
 # RqrcodePngBin
 
-command line interface for rqrcode_png
+command line interface for rqrcode
 
 ## Installation
 

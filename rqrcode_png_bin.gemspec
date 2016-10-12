@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = RqrcodePngBin::VERSION
   spec.authors       = ["wtnabe"]
   spec.email         = ["wtnabe@gmail.com"]
-  spec.description   = %q{command line interface for rqrcode_png}
-  spec.summary       = %q{command line interface for rqrcode_png}
+  spec.description   = %q{command line interface for rqrcode}
+  spec.summary       = %q{command line interface for rqrcode}
   spec.homepage      = "https://github.com/wtnabe/rqrcode_png_bin"
   spec.license       = "BSD"
 
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "rqrcode_png"
+  spec.add_runtime_dependency "rqrcode", "~> 0.10"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
