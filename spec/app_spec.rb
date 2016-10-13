@@ -7,6 +7,23 @@ describe RqrcodePngBin::App do
   end
 
   describe '#parser' do
+    context 'border modules' do
+      context 'nil' do
+        it {
+          expect(app.border_modules).to be_nil
+        }
+      end
+      context '4' do
+        it {
+          expect(app(%w(-b 4)).border_modules).to be(4)
+        }
+      end
+      context 'a' do
+        it {
+          expect {app(%w(-b a)).border_modules}.to raise_error(ArgumentError)
+        }
+      end
+    end
     context 'canvas' do
       context 'nil' do
         it {
@@ -55,6 +72,40 @@ describe RqrcodePngBin::App do
       context 'z' do
         it {
           expect {app(%w(-l z))}.to raise_error(ArgumentError)
+        }
+      end
+    end
+    context 'mode' do
+      context 'nil' do
+        it {
+          expect(app.mode).to be_nil
+        }
+      end
+      context 'number' do
+        it {
+          expect(app(%w(-m number)).mode).to be(:number)
+        }
+      end
+      context 'foo' do
+        it {
+          expect {app(%w(-m foo))}.to raise_error(ArgumentError)
+        }
+      end
+    end
+    context 'px_per_module' do
+      context 'nil' do
+        it {
+          expect(app.px_per_module).to be_nil
+        }
+      end
+      context '10' do
+        it {
+          expect(app(%w(-p 10)).px_per_module).to be(10)
+        }
+      end
+      context 'a' do
+        it {
+          expect {app(%w(-p a))}.to raise_error(ArgumentError)
         }
       end
     end
