@@ -5,7 +5,7 @@ module RqrcodePngBin
     def initialize(argv = [])
       @argv   = argv
 
-      @border_modules = nil
+      @border_modules = 4
       @canvas = nil
       @file   = nil
       @level  = :m
@@ -70,7 +70,7 @@ module RqrcodePngBin
       h = {}
 
       h[:size] = canvas.first if canvas
-      h[:border_modules] = border_modules if border_modules
+      h[:border_modules] = border_modules
       h[:module_px_size] = px_per_module  if px_per_module
 
       h

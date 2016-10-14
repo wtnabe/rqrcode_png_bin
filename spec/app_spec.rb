@@ -10,7 +10,7 @@ describe RqrcodePngBin::App do
     context 'border modules' do
       context 'nil' do
         it {
-          expect(app.border_modules).to be_nil
+          expect(app.border_modules).to be(4)
         }
       end
       context '4' do
