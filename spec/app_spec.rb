@@ -32,7 +32,7 @@ describe RqrcodePngBin::App do
       end
       context '200x200' do
         it {
-          expect(app(%w(-c 200x200)).canvas).to be == [200, 200]
+          expect(app(%w(-c 200)).canvas).to be(200)
         }
       end
       context 'abc' do

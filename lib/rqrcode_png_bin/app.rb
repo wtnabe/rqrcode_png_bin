@@ -69,7 +69,7 @@ module RqrcodePngBin
     def png_opts
       h = {}
 
-      h[:size] = canvas.first if canvas
+      h[:size]           = canvas if canvas
       h[:border_modules] = border_modules
       h[:module_px_size] = px_per_module  if px_per_module
 
@@ -91,13 +91,11 @@ module RqrcodePngBin
             raise ArgumentError, "option border modules should be integer"
           end
         }
-        opt.on('-c', '--canvas CANVAS (ex 200x200)') {|v|
-          re = %r{\A([0-9]+)x([0-9]+)\z}
-
-          if v =~ re
-            @canvas = [$1.to_i, $2.to_i]
+        opt.on('-c', '--canvas CANVAS (ex 200)') {|v|
+          if v =~ /\A[0-9]+\z/
+            @canvas = v.to_i
           else
-            raise ArgumentError, "option canvas should match #{re}"
+            raise ArgumentError, "option canvas should match be integer"
           end
         }
         opt.on('-f', '--from-file FILE') {|v|
