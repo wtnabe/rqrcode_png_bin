@@ -13,6 +13,7 @@ module RqrcodePngBin
       @px_per_module = nil
       @size   = 4
       @stdin  = nil
+      @try_larger = false
 
       parser.parse!(@argv)
     end
@@ -34,7 +35,19 @@ module RqrcodePngBin
     end
 
     def generate_png(str)
-      RQRCode::QRCode.new(encoded_str(str), opts).as_png(png_opts)
+      qr_opts = opts.dup
+
+      begin
+        RQRCode::QRCode.new(encoded_str(str), qr_opts).as_png(png_opts)
+      rescue RQRCode::QRCodeRunTimeError => e
+        if @try_larger && qr_opts[:size] < 40
+          qr_opts[:size] = qr_opts[:size] + 1
+          STDERR.puts "retrying #{str} with options #{qr_opts}"
+          retry
+        else
+          raise e
+        end
+      end
     end
 
     def encoded_str(str)
@@ -139,6 +152,9 @@ module RqrcodePngBin
           else
             raise ArgumentError, "option size should match #{re}"
           end
+        }
+        opt.on('-t', '--try-larger') {|v|
+          @try_larger = true
         }
       end
     end
