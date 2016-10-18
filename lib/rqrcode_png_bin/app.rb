@@ -21,6 +21,7 @@ module RqrcodePngBin
     def run
       if file
         FileReader.new(file).each {|str, dest|
+          FileUtils.mkdir_p(File.dirname(dest))
           open(dest, 'wb') {|f|
             f.puts generate_png(str)
           }
